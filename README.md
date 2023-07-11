@@ -5,7 +5,7 @@
  # <p align="center">TODO-LIST :: in CONSOLE</p>
 
 <p align="center">
-TodoList is a small project for practicing POO in Java, but especially database connection.
+TodoList is a small project for practicing OOP in Java, but especially database connection.
 
 </p>
 
@@ -15,7 +15,7 @@ TodoList is a small project for practicing POO in Java, but especially database 
 <br> 
 
 ## Features
-Un menu s' affiche en premier et on choisit une option entre : 
+A menu appears first and you choose an option between :
 - 1: Add a new todo
 - 2: Find a todo
 - 3: Update todo
@@ -25,14 +25,14 @@ Un menu s' affiche en premier et on choisit une option entre :
 
 ## Use
 - Fork this repository to have copy.
-- Clone in you pc.
+- Clone in your computer.
 
 ## Contribute
 > Contributions are welcome! If you want to improve this project, feel free to submit a pull request.
 
 ## Authors
-Fanomezana Nat
-Tiana-Finaritra 
+- Fanomezana Nat (Gambino)
+- Tiana-Finaritra 
 
 
 ### License
