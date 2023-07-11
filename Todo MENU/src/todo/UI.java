@@ -1,14 +1,34 @@
 package todo;
 
+import java.util.Scanner;
+
 public class UI {
     public static void main(String[] args) {
-        System.out.println("=== TODO Menu ===");
-        System.out.println("1.Add a new todo");
-        System.out.println("2.Find a todo");
-        System.out.println("3.Show todo");
-        System.out.println("4.Update a todo");
-        System.out.println("5.Delete a todo");
-        System.out.println("6.Quit");
 
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            TodoListManager.displayMenu();
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+
+            switch (choice) {
+                case 1 -> TodoListManager.addTodo();
+                case 2 -> TodoListManager.findTodo();
+                case 3 -> TodoListManager.showTodos();
+                case 4 -> TodoListManager.updateTodo();
+                case 5 -> TodoListManager.deleteTodo();
+                case 6 -> System.out.println("Goodbye!");
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 6);
+
+        scanner.close();
     }
+
+
 }
+
+
+
