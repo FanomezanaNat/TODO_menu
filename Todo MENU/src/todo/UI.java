@@ -26,8 +26,6 @@ public class UI {
 
         scanner.close();
     }
-
-
 }
 
 
