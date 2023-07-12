@@ -11,10 +11,9 @@ public class UI {
         do {
             TodoListManager.displayMenu();
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
-
+            scanner.nextLine(); //
             switch (choice) {
-                case 1 -> TodoListManager.addTodo();
+                case 1 -> TodoListManager.addTodo() ;
                 case 2 -> TodoListManager.findTodo();
                 case 3 -> TodoListManager.showTodos();
                 case 4 -> TodoListManager.updateTodo();
