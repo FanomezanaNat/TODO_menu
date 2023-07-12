@@ -76,7 +76,7 @@ public class TodoListManager {
 
     public static void updateTodo() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print(": Enter the new todo's state ");
+        System.out.print("Enter the new todo's state: ");
         String done = scanner.nextLine();
         System.out.print("Enter todo: ");
         String newTodo = scanner.nextLine();
