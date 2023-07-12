@@ -26,6 +26,20 @@ A menu appears first and you choose an option between :
 ## Use
 - Fork this repository to have copy.
 - Clone in your computer.
+  
+## Requirements
+
+* Java 17
+* JDBC Postgres module
+  
+## Instructions
+
+1. Install the JDBC Postgres module.
+2. Add the JDBC Postgres module as an external library to your project.
+3. Run the script in the database folder to create the database, if it doesn't already exist, and the table corresponding to the program
+4. Set the `username` property to the user of your database.
+5. Set the `password` property to your password.
+6. Run the program.
 
 ## Contribute
 > Contributions are welcome! If you want to improve this project, feel free to submit a pull request.
