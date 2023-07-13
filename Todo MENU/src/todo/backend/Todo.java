@@ -81,12 +81,9 @@ public class Todo {
     @Override
     public String toString() {
         return "---------------------------------\n"
-        + "\t. " + title +"\n"
-        + "\t. " + description +"\n"
-        + "\t. \n"
-        + "\t. \n"
-        + "\t---Status:\n"
-        + "\t. Deadline: " + deadline +"\n"
+        + "\t. title: " + title +"\n"
+        + "\t. description: " + description +"\n"
+*        + "\t. Deadline: " + deadline +"\n"
         + "\t. Priority Level: " + priority +"\n"
         + "\t. is done: " +  done +"\n"
         ;
