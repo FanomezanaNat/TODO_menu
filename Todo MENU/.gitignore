@@ -2,6 +2,8 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+.idea/
+Todo MENU.iml/
 
 ### Eclipse ###
 .apt_generated
@@ -25,7 +27,6 @@ bin/
 ### VS Code ###
 .vscode/
 lib/
-.idea/
 
 ### Mac OS ###
 .DS_Store

@@ -1,10 +1,8 @@
-package todo;
+package todo.backend;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import static todo.Settings.*;
 
 public class DatabaseConnectionManager {
     private String url;
@@ -13,9 +11,9 @@ public class DatabaseConnectionManager {
 
 
     public Connection getConnection() {
-        this.url = "jdbc:postgresql://localhost/" + DATABASE;
-        this.user = USERNAME;
-        this.password = PASSWORD;
+        this.url = "jdbc:postgresql://localhost/" + Settings.DATABASE;
+        this.user = Settings.USERNAME;
+        this.password = Settings.PASSWORD;
         try {
             return DriverManager.getConnection(this.url, this.user, this.password);
         } catch (SQLException e) {
