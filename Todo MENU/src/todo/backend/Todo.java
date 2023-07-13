@@ -10,7 +10,7 @@ public class Todo {
     private int priority;
     private boolean done;
     
-    // Contructor for Type Todo:
+    // Constructor for Type Todo:
     public Todo(int id, String title, String description, Timestamp deadline, int priority, boolean done) {
         this.title = title;
         this.description = description;
