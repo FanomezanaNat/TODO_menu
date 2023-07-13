@@ -1,9 +1,7 @@
 package todo;
 
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TodoDAOImpl implements TodoDAO {
@@ -15,13 +13,11 @@ public class TodoDAOImpl implements TodoDAO {
         connection = connectionManager.getConnection();
     }
 
-
     @Override
     public void addTodo(String title, String description, Timestamp deadline, int priority, boolean done) {
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO todo (title, description, deadline, priority, done) VALUES (?, ?, ?, ?, ?)"
-            );
+            "INSERT INTO todo (title, description, deadline, priority, done) VALUES (?, ?, ?, ?, ?)");
             statement.setString(1, title);
             statement.setString(2, description);
             statement.setTimestamp(3, deadline);
@@ -31,38 +27,50 @@ public class TodoDAOImpl implements TodoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
-    public boolean findTodo(String searchTodo) {
+    public List<Todo> findTodo(String searchTodo) {
+        List<Todo> todo = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM todo WHERE title = ?");
-            statement.setString(1, searchTodo);
+            PreparedStatement statement = connection.prepareStatement("SELECT title, description, deadline, priority, done FROM todo WHERE title ILIKE ?;");
+            statement.setString(1, "%" + searchTodo + "%");
+
             ResultSet resultSet = statement.executeQuery();
-            return resultSet.next(); // Returns true if a matching todo is found
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public List<String> getTodos() {
-        List<String> todo = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT title, deadline, priority, done FROM todo");
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
-                Date deadline = resultSet.getTimestamp("deadline");
+                String description = resultSet.getString("description");
+                Timestamp deadline = resultSet.getTimestamp("deadline");
                 int priority = resultSet.getInt("priority");
                 boolean done = resultSet.getBoolean("done");
-                todo.add(title);
-                todo.add(String.valueOf(deadline));
-                todo.add(String.valueOf(priority));
-                todo.add((String.valueOf(done)));
+               
+                Todo todos = new Todo(title, description, deadline, priority, done);
+                todo.add(todos);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return todo;
+    }
+
+    @Override
+    public List<Todo> getTodos() {
+        List<Todo> todo = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT title, description, deadline, priority, done FROM todo");
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                Timestamp deadline = resultSet.getTimestamp("deadline");
+                int priority = resultSet.getInt("priority");
+                boolean done = resultSet.getBoolean("done");
+                
+                Todo todos = new Todo(title, description, deadline, priority, done);
+                todo.add(todos);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -96,5 +104,3 @@ public class TodoDAOImpl implements TodoDAO {
         }
     }
 }
-
-

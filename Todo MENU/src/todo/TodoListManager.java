@@ -9,7 +9,7 @@ public class TodoListManager {
 
     public static void displayMenu() {
         System.out.println("=== TODO Menu ===");
-        System.out.println("1. Add a new todo");
+        System.out.println("1. Add aint new todo");
         System.out.println("2. Find a todo");
         System.out.println("3. Show todos");
         System.out.println("4. Update a todo");
@@ -36,7 +36,7 @@ public class TodoListManager {
         System.out.print("Enter the priority (0-10): ");
         int priority = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
-        if (priority>10 || priority<0){
+        if (priority > 10 || priority < 0) {
             System.out.println("priority must be between 0-10");
             return;
 
@@ -53,24 +53,29 @@ public class TodoListManager {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the todo to search for: ");
         String searchTodo = scanner.nextLine();
-        boolean found = todoDAO.findTodo(searchTodo);
+        List<Todo> todoTofind = todoDAO.findTodo(searchTodo);
 
-        if (found) {
-            System.out.println("Todo found: " + searchTodo);
+        if (todoTofind.isEmpty()) {
+            System.out.println(" => No todos found!" +
+                    "\n---------------------------------");
         } else {
-            System.out.println("Todo not found.");
+            System.out.println("\n => ALL FOUNDED TASKS: ");
+            System.out.println(todoTofind.get(0));
+            System.out.println("---------------------------------\n");
         }
     }
 
     public static void showTodos() {
         System.out.println("=== Todos ===");
-        List<String> todos = todoDAO.getTodos();
+        List<Todo> todos = todoDAO.getTodos();
         if (todos.isEmpty()) {
             System.out.println("No todos found.");
         } else {
-            for (String todo : todos) {
+            System.out.println("\n => ALL FOUNDED TASKS: ");
+            for (Todo todo : todos) {
                 System.out.println(todo);
             }
+            System.out.println("---------------------------------\n");
         }
     }
 
@@ -102,4 +107,3 @@ public class TodoListManager {
         }
     }
 }
-
