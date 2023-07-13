@@ -1,4 +1,4 @@
-package todo;
+package todo.backend;
 
 public class Settings {
     public static  String DATABASE = "todolist";

@@ -1,8 +1,12 @@
-package todo;
+package todo.views;
+
+// Import package from todo.backend:
+import todo.backend.*;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class TodoListManager {
     private static TodoDAO todoDAO = new TodoDAOImpl();

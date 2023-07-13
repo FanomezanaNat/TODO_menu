@@ -2,7 +2,9 @@ package todo;
 
 import java.util.Scanner;
 
-public class UI {
+import todo.views.TodoListManager;
+
+public class Index {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
