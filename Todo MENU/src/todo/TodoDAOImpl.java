@@ -3,6 +3,7 @@ package todo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
 
 public class TodoDAOImpl implements TodoDAO {
     private Connection connection;
@@ -78,11 +79,18 @@ public class TodoDAOImpl implements TodoDAO {
     }
 
     @Override
-    public boolean updateTodo(Boolean done, String newTodo) {
+    public boolean updateTodo(String todoToUpdate, String NewTitle, String NewDescription, Timestamp NewDeadline, int NewPriority, Boolean NewDoneValue) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE todo SET done = ? WHERE title = ?");
-            statement.setBoolean(1, done);
-            statement.setString(2, newTodo);
+            String query = "UPDATE todo SET title = ?, description = ? , deadline = ? , priority = ?, done = ? WHERE title ILIKE ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+    
+            statement.setString(1, NewTitle);
+            statement.setString(2, NewDescription);
+            statement.setTimestamp(3, NewDeadline);
+            statement.setInt(4, NewPriority);
+            statement.setBoolean(5, NewDoneValue);
+            statement.setString(6, "%" + todoToUpdate + "%");
+    
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0; // Returns true if any rows were updated
         } catch (SQLException e) {
@@ -90,12 +98,13 @@ public class TodoDAOImpl implements TodoDAO {
             return false;
         }
     }
+    
 
     @Override
     public boolean deleteTodo(String todo) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM todo WHERE title = ?");
-            statement.setString(1, todo);
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM todo WHERE title ILIKE ?");
+            statement.setString(1, "%" +todo+ "%");
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0; // Returns true if any rows were deleted
         } catch (SQLException e) {

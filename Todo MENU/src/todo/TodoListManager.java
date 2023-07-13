@@ -39,7 +39,6 @@ public class TodoListManager {
         if (priority > 10 || priority < 0) {
             System.out.println("priority must be between 0-10");
             return;
-
         }
         System.out.print("Is it done? (true/false): ");
         boolean done = scanner.nextBoolean();
@@ -51,7 +50,7 @@ public class TodoListManager {
 
     public static void findTodo() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the todo to search for: ");
+        System.out.print("Enter the todo's title to search for: ");
         String searchTodo = scanner.nextLine();
         List<Todo> todoTofind = todoDAO.findTodo(searchTodo);
 
@@ -81,16 +80,63 @@ public class TodoListManager {
 
     public static void updateTodo() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the new todo's state: ");
-        String done = scanner.nextLine();
-        System.out.print("Enter todo: ");
-        String newTodo = scanner.nextLine();
+        System.out.print("Enter the todo's title to update: ");
+        String todoToUpdate = scanner.nextLine();
 
-        boolean updated = todoDAO.updateTodo(Boolean.valueOf(done), newTodo);
+        // Find Todos matching your search criteria
+        List<Todo> foundTodos = todoDAO.findTodo(todoToUpdate);
+
+        // Verify if any todos have been found
+        if (foundTodos.isEmpty()) {
+            System.out.println("No matching Todos found.");
+            return;
+        }
+
+        // Display the found results
+        System.out.println("Matching Todos found:");
+        for (int i = 0; i < foundTodos.size(); i++) {
+            Todo todo = foundTodos.get(i);
+            int displayIndex = i + 1;
+            System.out.println("[" + displayIndex + "] " + todo);
+        }
+
+        // Select a todo to update by index
+        System.out.print("Enter the index of the Todo to update: ");
+        int todoIndex = scanner.nextInt();
+        scanner.nextLine(); // Clear the remaining line
+
+        // Check if the index is valid
+        if (todoIndex < 1 || todoIndex > foundTodos.size()) {
+            System.out.println("Invalid index.");
+            return;
+        }
+
+        Todo selectedTodo = foundTodos.get(todoIndex - 1);
+
+        // Ask for new values
+        System.out.print("Enter the new title: ");
+        String newTitle = scanner.nextLine();
+
+        System.out.print("Enter the new description: ");
+        String newDescription = scanner.nextLine();
+
+        System.out.print("Enter the new deadline (yyyy-MM-dd HH:mm:ss): ");
+        String deadlineString = scanner.nextLine();
+        Timestamp newDeadline = Timestamp.valueOf(deadlineString);
+
+        System.out.print("Enter the new priority: ");
+        int newPriority = scanner.nextInt();
+
+        System.out.print("Enter the new done value (true/false): ");
+        boolean newDoneValue = scanner.nextBoolean();
+
+        // Call the updateTodo() method with the new values
+        boolean updated = todoDAO.updateTodo(selectedTodo.getTitle(), newTitle, newDescription, newDeadline,
+                newPriority, newDoneValue);
         if (updated) {
             System.out.println("Todo updated successfully!");
         } else {
-            System.out.println("Todo not found.");
+            System.out.println("Todo update failed.");
         }
     }
 
@@ -98,12 +144,44 @@ public class TodoListManager {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the todo to delete: ");
         String todo = scanner.nextLine();
-        boolean removed = todoDAO.deleteTodo(todo);
+
+        // Search for Todos matching the search criteria
+        List<Todo> foundTodos = todoDAO.findTodo(todo);
+
+        // Check if any Todos were found
+        if (foundTodos.isEmpty()) {
+            System.out.println("No matching Todos found.");
+            return;
+        }
+
+        // Display the found results with indices starting from 1
+        System.out.println("Matching Todos found:");
+        for (int i = 0; i < foundTodos.size(); i++) {
+            Todo todoss = foundTodos.get(i);
+            int displayIndex = i + 1;
+            System.out.println("[" + displayIndex + "] " + todoss);
+        }
+
+        System.out.print("Enter the index of the Todo to delete: ");
+        int todoIndex = scanner.nextInt();
+        scanner.nextLine(); // Clear the remaining line
+
+        // Check if the index is valid
+        if (todoIndex < 1 || todoIndex > foundTodos.size()) {
+            System.out.println("Invalid index.");
+            return;
+        }
+
+        // Select the Todo to delete
+        Todo selectedTodo = foundTodos.get(todoIndex - 1);
+
+        // Delete the selected Todo
+        boolean removed = todoDAO.deleteTodo(selectedTodo.getTitle());
 
         if (removed) {
             System.out.println("Todo deleted successfully!");
         } else {
-            System.out.println("Todo not found.");
+            System.out.println("Todo deletion failed.");
         }
     }
 }
