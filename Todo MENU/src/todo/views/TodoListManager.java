@@ -13,7 +13,7 @@ public class TodoListManager {
 
     public static void displayMenu() {
         System.out.println("=== TODO Menu ===");
-        System.out.println("1. Add aint new todo");
+        System.out.println("1. Add a new todo");
         System.out.println("2. Find a todo");
         System.out.println("3. Show todos");
         System.out.println("4. Update a todo");
@@ -63,7 +63,9 @@ public class TodoListManager {
                     "\n---------------------------------");
         } else {
             System.out.println("\n => ALL FOUNDED TASKS: ");
-            System.out.println(todoTofind.get(0));
+            for (Todo todo : todoTofind) {
+                System.out.println(todo);
+            }
             System.out.println("---------------------------------\n");
         }
     }
